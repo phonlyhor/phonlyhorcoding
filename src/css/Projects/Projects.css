@@ -1,0 +1,126 @@
+.projects-section {
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #fff;
+}
+
+.projects-header {
+  margin-bottom: 40px;
+}
+
+.sub-title {
+  color: #a8a29e;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 48px;
+}
+
+.highlight {
+  color: #38bdf8;
+}
+
+/* Filter Buttons */
+.filter-nav {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.filter-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 8px 24px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: #38bdf8;
+  border-color: #38bdf8;
+  color: #000;
+}
+
+/* Projects Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.project-card {
+  background: #111827;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: 0.3s;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.card-image {
+  height: 200px;
+  width: 100%;
+}
+
+.card-content {
+  padding: 25px;
+}
+
+.card-content h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.card-tags {
+  display: flex;
+  gap: 10px;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+@media (max-width: 600px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ================= PROJECT ANIMATION ================= */
+
+.project-card {
+  opacity: 0;
+  transform: translateY(50px) scale(0.95);
+  transition: all 0.7s ease;
+}
+
+/* when visible */
+.project-card.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* hover effect */
+.project-card {
+  transition: all 0.4s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}

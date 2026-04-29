@@ -1,0 +1,247 @@
+/* ====================== About Section ====================== */
+
+.about {
+  padding: 100px 20px;
+  background-color: #0f172a;
+  color: #fff;
+}
+
+/* Container */
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+/* LEFT SIDE */
+.about-left {
+  flex: 1;
+}
+
+.section-tag {
+  color: #8b5cf6;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.about-left h2 {
+  font-size: 42px;
+  line-height: 1.1;
+  margin: 15px 0 25px;
+  font-weight: 700;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #8b5cf6, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about-left p {
+  color: #94a3b8;
+  margin: 15px 0;
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+.btn-download {
+  margin-top: 30px;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  border: 2px solid #8b5cf6;
+  background: transparent;
+  color: #8b5cf6;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-download:hover {
+  background: #8b5cf6;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* RIGHT CARD */
+.about-card {
+  flex: 0 0 380px;
+  padding: 35px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.about-card h3 {
+  color: #8b5cf6;
+  margin-bottom: 8px;
+  font-size: 1.35rem;
+}
+
+.card-title {
+  font-size: 1.55rem;
+  font-weight: 600;
+  margin: 6px 0 10px;
+}
+
+.card-sub {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.about-card hr {
+  margin: 25px 0;
+  border: none;
+  border-top: 1px solid #334155;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tags span {
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid #8b5cf6;
+  font-size: 13px;
+  color: #c4b5fd;
+  transition: 0.3s;
+}
+
+.tags span:hover {
+  background: rgba(139, 92, 246, 0.25);
+  transform: translateY(-2px);
+}
+
+/* STATS */
+.stats {
+  max-width: 1200px;
+  margin: 80px auto 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.stat {
+  flex: 1;
+  padding: 30px 20px;
+  text-align: center;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s ease;
+}
+
+.stat:hover {
+  transform: translateY(-6px);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.stat h3 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #8b5cf6;
+  margin: 0 0 8px 0;
+}
+
+.stat p {
+  color: #94a3b8;
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+/* ====================== RESPONSIVE ====================== */
+
+@media (max-width: 992px) {
+  .about-container {
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  .about-card {
+    flex: none;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 80px 20px;
+  }
+
+  .about-left h2 {
+    font-size: 36px;
+  }
+
+  .stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .stat {
+    padding: 25px 20px;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 100px; /* fix navbar overlap */
+}
+
+#particleCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+/* ====================== SCROLL ANIMATION ====================== */
+
+.reveal,
+.reveal-left,
+.reveal-right {
+  opacity: 0;
+  transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* default bottom fade */
+.reveal {
+  transform: translateY(50px);
+}
+
+/* left slide */
+.reveal-left {
+  transform: translateX(-60px);
+}
+
+/* right slide */
+.reveal-right {
+  transform: translateX(60px);
+}
+
+/* active state (when in viewport) */
+.reveal.active,
+.reveal-left.active,
+.reveal-right.active {
+  opacity: 1;
+  transform: translate(0);
+}
