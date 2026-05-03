@@ -24,17 +24,15 @@ const About = () => {
               From intuitive user interfaces to robust backend systems, I bring
               ideas to life with precision and creativity.
             </p>
-
-            <button className="btn-download">
-              <a
-                style={{ textDecoration: "none" }}
-                href="/public/cv/PhonLyhor.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                ⬇ Download CV
-              </a>
-            </button>
+            <a
+              className="btn-download"
+              style={{ textDecoration: "none" }}
+              href="/cv/PhonLyhor.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ⬇ Download CV
+            </a>
           </div>
 
           <div className="about-card reveal-right">
