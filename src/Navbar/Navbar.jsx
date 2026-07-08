@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 
 import "../css/Navbar/Navbar.css";
-import pic from "../assets/pic.jpg";
+import pic from "../assets/5864.png";
 
 const Navbar = () => {
   const textRef = useRef(null);

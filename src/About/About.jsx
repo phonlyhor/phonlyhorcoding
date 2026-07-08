@@ -26,8 +26,8 @@ const About = () => {
             </p>
             <a
               className="btn-download"
-              style={{ textDecoration: "none" }}
-              href="/cv/PhonLyhor.pdf"
+              href="/cv/phonlyhorcv.pdf"
+              download="Phonlyhor_CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
             >
