@@ -1,3 +1,5 @@
+import { LanguageProvider } from "./context/LanguageContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./Navbar/Navbar";
 import About from "./About/About";
 import Skills from "./Skills/Skills";
@@ -9,16 +11,18 @@ import Footer from "./Footer/Footer";
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <About />
-      <Skills />
-      <Services />
-      <Projects />
-      <Experience />
-      <Contact />
-      <Footer />
-    </>
+    <ThemeProvider>
+      <LanguageProvider>
+        <Navbar />
+        <About />
+        <Skills />
+        <Services />
+        <Projects />
+        <Experience />
+        <Contact />
+        <Footer />
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 

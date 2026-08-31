@@ -1,80 +1,95 @@
 import { memo } from "react";
+import { useLanguage } from "../context/LanguageContext";
 import "../css/About/About.css";
 
 const About = () => {
+  const { t } = useLanguage();
+
   return (
-    <>
-      <section id="about" className="about section">
-        <div className="about-container">
-          <div className="about-left reveal-left">
-            <span className="section-tag">ABOUT</span>
+    <section id="about" className="about">
+      <div className="about-container">
+        <div className="about-left reveal-left">
+          <span className="section-tag">{t.about.tag}</span>
 
-            <h2>
-              Turning ideas into
-              <span className="gradient-text"> digital reality</span>
-            </h2>
+          <h2>
+            {t.about.titleStart}{" "}
+            <span className="gradient-text">{t.about.titleEnd}</span>
+          </h2>
 
-            <p>
-              I'm a Web Development student and creative designer driven by a
-              passion for building beautiful,
-              <br /> functional digital experiences.
-            </p>
+          <p>{t.about.desc1}</p>
 
-            <p>
-              From intuitive user interfaces to robust backend systems, I bring
-              ideas to life with precision and creativity.
-            </p>
-            <a
-              className="btn-download"
-              href="/cv/phonlyhorcv.pdf"
-              download="Phonlyhor_CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ⬇ Download CV
-            </a>
-          </div>
+          <p>{t.about.desc2}</p>
 
-          <div className="about-card reveal-right">
-            <h3>Education</h3>
-            <p className="card-title">Web Development</p>
-            <span className="card-sub">Currently pursuing degree</span>
-
-            <hr />
-
-            <h3>Focus Areas</h3>
-            <div className="tags">
-              <span>Application Programming Interface</span>
-              <span>Frontend Dev</span>
-              <span>Backend Dev</span>
-              <span>Branding</span>
+          <div className="about-highlights">
+            <div className="about-highlight-item">
+              <i className="fa-solid fa-circle-check"></i> {t.about.h1}
+            </div>
+            <div className="about-highlight-item">
+              <i className="fa-solid fa-circle-check"></i> {t.about.h2}
+            </div>
+            <div className="about-highlight-item">
+              <i className="fa-solid fa-circle-check"></i> {t.about.h3}
+            </div>
+            <div className="about-highlight-item">
+              <i className="fa-solid fa-circle-check"></i> {t.about.h4}
             </div>
           </div>
+
+          <a
+            className="btn-download"
+            href="/cv/phonlyhorcv.pdf"
+            download="Phonlyhor_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fa-solid fa-download"></i> {t.about.downloadCv}
+          </a>
         </div>
 
-        <div className="stats">
-          <div className="stat reveal">
-            <h3>0</h3>
-            <p>Years Experience</p>
-          </div>
+        <div className="about-card reveal-right">
+          <h3>
+            <i className="fa-solid fa-graduation-cap"></i> {t.about.eduTitle}
+          </h3>
+          <p className="card-title">{t.about.degree}</p>
+          <span className="card-sub">{t.about.degreeSub}</span>
 
-          <div className="stat reveal">
-            <h3>10+</h3>
-            <p>Projects Done</p>
-          </div>
+          <hr />
 
-          <div className="stat reveal">
-            <h3>15+</h3>
-            <p>Happy Clients</p>
-          </div>
-
-          <div className="stat reveal">
-            <h3>5+</h3>
-            <p>Awards</p>
+          <h3>
+            <i className="fa-solid fa-layer-group"></i> {t.about.focusTitle}
+          </h3>
+          <div className="tags">
+            {t.about.tags.map((tag, idx) => (
+              <span key={idx}>
+                <i className="fa-solid fa-code"></i> {tag}
+              </span>
+            ))}
           </div>
         </div>
-      </section>
-    </>
+      </div>
+
+      <div className="stats">
+        <div className="stat reveal">
+          <h3>{t.about.stat1Val}</h3>
+          <p>{t.about.stat1Lbl}</p>
+        </div>
+
+        <div className="stat reveal">
+          <h3>{t.about.stat2Val}</h3>
+          <p>{t.about.stat2Lbl}</p>
+        </div>
+
+        <div className="stat reveal">
+          <h3>{t.about.stat3Val}</h3>
+          <p>{t.about.stat3Lbl}</p>
+        </div>
+
+        <div className="stat reveal">
+          <h3>{t.about.stat4Val}</h3>
+          <p>{t.about.stat4Lbl}</p>
+        </div>
+      </div>
+    </section>
   );
 };
 

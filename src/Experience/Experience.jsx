@@ -1,28 +1,10 @@
 import { useEffect } from "react";
+import { useLanguage } from "../context/LanguageContext";
 import "../css/Experience/Experience.css";
 
 const Experience = () => {
-  const experiences = [
-    {
-      date: "2024 – Present",
-      role: "UI/UX Designer",
-      description:
-        "Designing intuitive and beautiful user experiences for web and mobile applications.",
-    },
-    {
-      date: "2023 – Present",
-      role: "Web Developer",
-      description:
-        "Building responsive, performant web applications using modern frameworks and best practices.",
-    },
-    {
-      date: "2022 – 2024",
-      role: "System Analyst",
-      description: "Analyzing and improving business processes and systems.",
-    },
-  ];
+  const { t } = useLanguage();
 
-  // 🔥 scroll animation
   useEffect(() => {
     const items = document.querySelectorAll(".timeline-item");
 
@@ -32,11 +14,11 @@ const Experience = () => {
           if (entry.isIntersecting) {
             setTimeout(() => {
               entry.target.classList.add("active");
-            }, index * 150); // stagger effect
+            }, index * 150);
           }
         });
       },
-      { threshold: 0.2 },
+      { threshold: 0.15 }
     );
 
     items.forEach((item) => observer.observe(item));
@@ -46,24 +28,36 @@ const Experience = () => {
 
   return (
     <section id="experience" className="experience-section">
-      <div className="experience-header">
-        <p className="sub-title">EXPERIENCE</p>
+      <div className="experience-header reveal">
+        <p className="sub-title">{t.experience.tag}</p>
         <h2 className="title">
-          My <span className="highlight">journey</span>
+          {t.experience.titleStart} <span className="highlight">{t.experience.titleEnd}</span>
         </h2>
       </div>
 
       <div className="timeline">
         <div className="timeline-line"></div>
 
-        {experiences.map((exp, index) => (
+        {t.experience.items.map((exp, index) => (
           <div key={index} className="timeline-item">
             <div className="timeline-dot"></div>
 
             <div className="timeline-content">
-              <span className="date">{exp.date}</span>
+              <div className="timeline-meta">
+                <span className="date">{exp.date}</span>
+                <span className="company-badge">
+                  <i className="fa-solid fa-briefcase"></i> {exp.company}
+                </span>
+              </div>
               <h3>{exp.role}</h3>
               <p>{exp.description}</p>
+              <ul className="timeline-highlights">
+                {exp.highlights.map((h, i) => (
+                  <li key={i}>
+                    <i className="fa-solid fa-check"></i> {h}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         ))}

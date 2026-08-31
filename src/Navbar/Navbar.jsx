@@ -1,11 +1,43 @@
 import { memo, useEffect, useRef, useState } from "react";
-
+import { useLanguage } from "../context/LanguageContext";
+import { useTheme } from "../context/ThemeContext";
 import "../css/Navbar/Navbar.css";
 import pic from "../assets/5864.png";
 
 const Navbar = () => {
+  const { lang, toggleLanguage, t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const textRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState("hero");
+
+  // =========================
+  // SCROLL SPY FOR ACTIVE NAV
+  // =========================
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["about", "skills", "services", "projects", "experience", "contact"];
+      const scrollPosition = window.scrollY + 200;
+
+      for (let sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveNav(sectionId);
+            return;
+          }
+        }
+      }
+      if (window.scrollY < 300) {
+        setActiveNav("hero");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // =========================
   // PARTICLE BACKGROUND
@@ -17,23 +49,27 @@ const Navbar = () => {
     const ctx = canvas.getContext("2d");
     let animationId;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
 
     let particles = [];
 
     class Particle {
-      constructor(x, y, dx, dy, size) {
+      constructor(x, y, dx, dy, size, color) {
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
         this.size = size;
+        this.color = color;
       }
 
       draw() {
         ctx.beginPath();
-        ctx.fillStyle = "rgba(56,189,248,0.6)";
+        ctx.fillStyle = this.color;
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
       }
@@ -50,15 +86,20 @@ const Navbar = () => {
 
     function init() {
       particles = [];
-      for (let i = 0; i < 60; i++) {
+      const darkColors = ["rgba(56,189,248,0.5)", "rgba(139,92,246,0.5)", "rgba(16,185,129,0.4)"];
+      const lightColors = ["rgba(2,132,199,0.4)", "rgba(124,58,237,0.4)", "rgba(5,150,105,0.4)"];
+      const colors = theme === "light" ? lightColors : darkColors;
+
+      for (let i = 0; i < 50; i++) {
         particles.push(
           new Particle(
             Math.random() * canvas.width,
             Math.random() * canvas.height,
-            (Math.random() - 0.5) * 0.5,
-            (Math.random() - 0.5) * 0.5,
-            Math.random() * 2,
-          ),
+            (Math.random() - 0.5) * 0.6,
+            (Math.random() - 0.5) * 0.6,
+            Math.random() * 2.5 + 0.8,
+            colors[Math.floor(Math.random() * colors.length)]
+          )
         );
       }
     }
@@ -73,8 +114,7 @@ const Navbar = () => {
     animate();
 
     const resizeHandler = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      resizeCanvas();
       init();
     };
 
@@ -84,21 +124,18 @@ const Navbar = () => {
       window.removeEventListener("resize", resizeHandler);
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [theme]);
 
   // =========================
   // TYPING ANIMATION
   // =========================
   useEffect(() => {
-    const phrases = [
-      "Software Engineer",
-      "Web Developer",
-      "Point Of Sale System",
-    ];
+    const phrases = t.hero.phrases;
 
     let phraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
+    let timer;
 
     const type = () => {
       const current = phrases[phraseIndex];
@@ -112,7 +149,7 @@ const Navbar = () => {
 
         if (charIndex === current.length) {
           isDeleting = true;
-          setTimeout(type, 1500);
+          timer = setTimeout(type, 1800);
           return;
         }
       } else {
@@ -125,14 +162,17 @@ const Navbar = () => {
         }
       }
 
-      setTimeout(type, isDeleting ? 60 : 100);
+      timer = setTimeout(type, isDeleting ? 40 : 80);
     };
 
     type();
-  }, []);
+    return () => clearTimeout(timer);
+  }, [lang, t]);
+
+  // Scroll reveal observer
   useEffect(() => {
     const elements = document.querySelectorAll(
-      ".reveal, .reveal-left, .reveal-right",
+      ".reveal, .reveal-left, .reveal-right"
     );
 
     const observer = new IntersectionObserver(
@@ -143,7 +183,7 @@ const Navbar = () => {
           }
         });
       },
-      { threshold: 0.15 },
+      { threshold: 0.15 }
     );
 
     elements.forEach((el) => observer.observe(el));
@@ -153,74 +193,136 @@ const Navbar = () => {
 
   return (
     <>
+      <div className="ambient-light-1"></div>
+      <div className="ambient-light-2"></div>
       <canvas id="particleCanvas"></canvas>
 
-      <nav className="navbar">
-        <div className="logo">
-          <a className="logo" href="/">
-            PHL...
-          </a>
-        </div>
-
-        {/* Hamburger */}
+      {/* Backdrop for Mobile Drawer */}
+      {menuOpen && (
         <div
-          className={`menu-toggle ${menuOpen ? "open" : ""}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+          className="nav-backdrop"
+          onClick={() => setMenuOpen(false)}
+        ></div>
+      )}
 
-        {/* Nav Links (SCROLL) */}
+      <nav className="navbar">
+        <a href="#hero" className="logo-link" onClick={() => setMenuOpen(false)}>
+          <div className="logo-badge">PL</div>
+          <div className="logo-text">
+            Phon <span>Lyhor</span>
+          </div>
+        </a>
+
+        {/* Nav Links Dropdown / Drawer */}
         <div className={`nav-links ${menuOpen ? "active" : ""}`}>
-          <a href="#about" onClick={() => setMenuOpen(false)}>
-            About
+          <a
+            href="#about"
+            className={activeNav === "about" ? "active" : ""}
+            onClick={() => setMenuOpen(false)}
+          >
+            {t.nav.about}
           </a>
-          <a href="#skills" onClick={() => setMenuOpen(false)}>
-            Skills
+          <a
+            href="#skills"
+            className={activeNav === "skills" ? "active" : ""}
+            onClick={() => setMenuOpen(false)}
+          >
+            {t.nav.skills}
           </a>
-          <a href="#services" onClick={() => setMenuOpen(false)}>
-            Services
+          <a
+            href="#services"
+            className={activeNav === "services" ? "active" : ""}
+            onClick={() => setMenuOpen(false)}
+          >
+            {t.nav.services}
           </a>
-          <a href="#projects" onClick={() => setMenuOpen(false)}>
-            Projects
+          <a
+            href="#projects"
+            className={activeNav === "projects" ? "active" : ""}
+            onClick={() => setMenuOpen(false)}
+          >
+            {t.nav.projects}
+          </a>
+          <a
+            href="#experience"
+            className={activeNav === "experience" ? "active" : ""}
+            onClick={() => setMenuOpen(false)}
+          >
+            {t.nav.experience}
+          </a>
+          <a
+            href="#contact"
+            className={activeNav === "contact" ? "active" : ""}
+            onClick={() => setMenuOpen(false)}
+          >
+            {t.nav.contact}
           </a>
 
-          {/* Keep these as pages if needed */}
-          <a href="#experience" onClick={() => setMenuOpen(false)}>
-            Experience
-          </a>
-          <a href="#contact" onClick={() => setMenuOpen(false)}>
-            Contact
+          {/* Mobile CTA Button */}
+          <a
+            href="https://t.me/phonlyhor79"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-nav mobile-cta"
+            onClick={() => setMenuOpen(false)}
+          >
+            <i className="fa-paper-plane fa-solid"></i> {t.nav.talk}
           </a>
         </div>
 
-        <div className="nav-actions">
-          <button className="icon-btn">🌐 EN</button>
-          <button className="cta-nav">
-            <a
-              className="logo"
-              style={{ textDecoration: "none" }}
-              href="https://t.me/phonlyhor79"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-nav"
-            >
-              Let's Talk
-            </a>
+        {/* Right side container: Theme Toggle, Language Switcher right next to Telegram CTA */}
+        <div className="nav-right-container">
+          <button
+            className="theme-toggle-btn"
+            onClick={toggleTheme}
+            title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            aria-label="Toggle Theme Mode"
+          >
+            {theme === "dark" ? (
+              <i className="fa-solid fa-sun icon-sun"></i>
+            ) : (
+              <i className="fa-solid fa-moon icon-moon"></i>
+            )}
           </button>
+
+          <button className="lang-btn" onClick={toggleLanguage} title="Switch Language">
+            <span className="lang-globe">🌐</span>
+            <span className="lang-code">{lang === "en" ? "KH" : "EN"}</span>
+          </button>
+
+          <a
+            href="https://t.me/phonlyhor79"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-nav desktop-cta"
+          >
+            <i className="fa-paper-plane fa-solid"></i> {t.nav.talk}
+          </a>
+
+          {/* Mobile Hamburger Toggle */}
+          <div
+            className={`menu-toggle ${menuOpen ? "open" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle Navigation Menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
       </nav>
 
-      {/* HERO */}
-      <div className="container">
+      {/* HERO SECTION */}
+      <div className="hero-wrapper" id="hero">
         <main className="hero">
           <div className="hero-content reveal-left">
-            <div className="badge reveal">Available for work</div>
+            <div className="status-badge">
+              <span className="status-dot"></span>
+              {t.hero.status}
+            </div>
 
             <h1 className="reveal">
-              Hi, I'm <span className="highlight">Phon Lyhor</span>
+              {t.hero.greeting} <span className="highlight">{t.hero.name}</span>
             </h1>
 
             <div className="typing-container reveal">
@@ -228,24 +330,46 @@ const Navbar = () => {
               <span className="cursor">|</span>
             </div>
 
-            <p className="reveal">
-              Crafting premium digital experiences at the intersection of design
-              and engineering.
+            <p className="hero-description reveal">
+              {t.hero.description}
             </p>
 
-            <div className="buttons reveal">
-              <button className="btn-primary">
-                <a style={{ textDecoration: "none" }} href="#projects">
-                  View Projects
-                </a>
-              </button>
-              <button className="btn-secondary">Hire Me</button>
+            <div className="hero-buttons reveal">
+              <a href="#projects" className="btn-primary">
+                {t.hero.exploreBtn} <i className="fa-solid fa-arrow-right"></i>
+              </a>
+              <a href="#contact" className="btn-secondary">
+                <i className="fa-regular fa-envelope"></i> {t.hero.contactBtn}
+              </a>
             </div>
           </div>
 
-          <div className="hero-image reveal-right">
-            <div className="circle-glow">
-              <img src={pic} alt="Profile" />
+          <div className="hero-image-wrapper reveal-right">
+            <div className="glowing-frame">
+              <div className="glowing-frame-inner">
+                <img src={pic} alt="Phon Lyhor Profile" />
+              </div>
+            </div>
+
+            {/* Floating Info Badges */}
+            <div className="float-badge top-left">
+              <div className="badge-icon">
+                <i className="fa-solid fa-code"></i>
+              </div>
+              <div className="badge-text">
+                <strong>{t.hero.badge1Title}</strong>
+                <span>{t.hero.badge1Sub}</span>
+              </div>
+            </div>
+
+            <div className="float-badge bottom-right">
+              <div className="badge-icon">
+                <i className="fa-solid fa-rocket"></i>
+              </div>
+              <div className="badge-text">
+                <strong>{t.hero.badge2Title}</strong>
+                <span>{t.hero.badge2Sub}</span>
+              </div>
             </div>
           </div>
         </main>
