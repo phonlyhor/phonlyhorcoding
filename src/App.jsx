@@ -8,6 +8,7 @@ import Projects from "./Projects/Projects";
 import Experience from "./Experience/Experience";
 import Contact from "./Contact/Contact";
 import Footer from "./Footer/Footer";
+import AiCopilot from "./AiCopilot/AiCopilot";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Experience />
         <Contact />
         <Footer />
+        <AiCopilot />
       </LanguageProvider>
     </ThemeProvider>
   );

@@ -38,12 +38,12 @@ const Skills = () => {
     },
     {
       category: t.skills.categories.tools,
-      icon: "fa-solid fa-screwdriver-wrench",
+      icon: "fa-solid fa-microchip",
       items: [
-        { name: "Git & GitHub", percent: 90, icon: "fa-brands fa-git-alt" },
-        { name: "VS Code Environment", percent: 95, icon: "fa-solid fa-laptop-code" },
-        { name: "Postman API Testing", percent: 88, icon: "fa-solid fa-paper-plane" },
-        { name: "Vite & Build Tools", percent: 85, icon: "fa-solid fa-bolt" },
+        { name: "AI & LLM Integration (Gemini/OpenAI)", percent: 88, icon: "fa-solid fa-brain" },
+        { name: "Git & GitHub CI/CD", percent: 90, icon: "fa-brands fa-git-alt" },
+        { name: "VS Code & AI Tooling", percent: 95, icon: "fa-solid fa-laptop-code" },
+        { name: "Postman & REST API Systems", percent: 88, icon: "fa-solid fa-paper-plane" },
       ],
     },
   ];
@@ -79,6 +79,11 @@ const Skills = () => {
       <div className="skills-grid">
         {skillsData.map((category, index) => (
           <div key={index} className="skill-card">
+            <div className="card-hud-corner tl"></div>
+            <div className="card-hud-corner tr"></div>
+            <div className="card-hud-corner bl"></div>
+            <div className="card-hud-corner br"></div>
+
             <div className="skill-card-header">
               <div className="skill-card-icon">
                 <i className={category.icon}></i>
@@ -101,7 +106,9 @@ const Skills = () => {
                     <div
                       className="progress-bar"
                       style={{ width: `${skill.percent}%` }}
-                    ></div>
+                    >
+                      <span className="progress-pulse-node"></span>
+                    </div>
                   </div>
                 </div>
               ))}

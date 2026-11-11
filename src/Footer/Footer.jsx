@@ -17,6 +17,10 @@ const Footer = () => {
             <div className="logo-badge">PL</div>
             <h3>Phon Lyhor</h3>
           </div>
+          <div className="footer-system-chip">
+            <span className="footer-beacon"></span>
+            <span>NEURAL CORE ACTIVE • SYS: v4.5</span>
+          </div>
           <p>{t.footer.desc}</p>
         </div>
 

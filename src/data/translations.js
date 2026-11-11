@@ -12,13 +12,25 @@ export const translations = {
     },
     hero: {
       status: "Available for Full-Time & Freelance",
+      aiBadge: "✦ AI-AUGMENTED FULL-STACK ENGINEER",
+      aiTelemetry: "SYS: ONLINE // NEURAL CORE v4.5 // SUB-SECOND LATENCY",
+      aiPromptBarTitle: "✦ Ask Lyhor AI Copilot:",
+      aiPromptPlaceholder: "Ask about tech stack, POS architecture, hiring...",
+      aiPromptBtn: "Ask AI",
+      quickPrompts: [
+        { label: "⚡ Tech Stack", q: "What is Lyhor's core tech stack and architecture?" },
+        { label: "☕ POS Systems", q: "Tell me about his enterprise Point of Sale systems." },
+        { label: "🤖 AI Workflows", q: "How does Lyhor leverage AI in modern engineering?" },
+        { label: "💼 Available for Hire?", q: "Is Lyhor currently available for full-time or freelance work?" }
+      ],
       greeting: "Hi, I'm",
       name: "Phon Lyhor",
       phrases: [
         "Full-Stack Web Developer",
-        "POS System Specialist",
+        "AI-Integrated Solutions Architect",
+        "Enterprise POS Specialist",
         "UI/UX Interactive Designer",
-        "React & Laravel Engineer"
+        "Java, Spring Boot & React Engineer"
       ],
       description: "Passionate Web Developer & Creative Engineer building sleek, responsive, and robust digital solutions from Phnom Penh, Cambodia.",
       exploreBtn: "Explore Work",
@@ -27,6 +39,21 @@ export const translations = {
       badge1Sub: "Java, Spring Boot & React",
       badge2Title: "10+ Projects",
       badge2Sub: "Built & Deployed"
+    },
+    copilot: {
+      title: "Lyhor AI Copilot",
+      badge: "NEURAL ASSISTANT v4.5",
+      greeting: "✦ Greetings! I'm Lyhor's AI Copilot. Ask me anything about his technical stack, Point of Sale architecture, background, or hiring availability.",
+      inputPlaceholder: "Ask anything about Lyhor's skills, POS, projects...",
+      sendBtn: "Send",
+      thinking: "Synthesizing answer...",
+      close: "Close Copilot",
+      clear: "Clear Chat",
+      floatingBtn: "Ask Lyhor AI",
+      quickPromptTitle: "Suggested Prompts",
+      actionProjects: "⚡ View Projects",
+      actionContact: "💬 Telegram Chat",
+      actionCv: "📄 Download CV"
     },
     about: {
       tag: "ABOUT ME",
@@ -232,13 +259,25 @@ export const translations = {
     },
     hero: {
       status: "ត្រៀមខ្លួនសម្រាប់រាល់ការងារពេញម៉ោង & ហ្វ្រីឡេន",
+      aiBadge: "✦ វិស្វករ FULL-STACK & បច្ចេកវិទ្យា AI",
+      aiTelemetry: "ប្រព័ន្ធ: ដំណើរការ // ស្នូល AI v4.5 // ល្បឿនលឿនបំផុត",
+      aiPromptBarTitle: "✦ សួរ Lyhor AI Copilot:",
+      aiPromptPlaceholder: "សួរអំពីជំនាញកូដ ស្ថាបត្យកម្ម POS ឬការងារ...",
+      aiPromptBtn: "សួរ AI",
+      quickPrompts: [
+        { label: "⚡ ជំនាញបច្ចេកវិទ្យា", q: "តើលីហ័រជំនាញខាងភាសាកូដ និងបច្ចេកវិទ្យាអ្វីខ្លះ?" },
+        { label: "☕ ប្រព័ន្ធ POS", q: "ប្រាប់ខ្ញុំអំពីគម្រោងប្រព័ន្ធ POS របស់គាត់" },
+        { label: "🤖 ការប្រើប្រាស់ AI", q: "តើលីហ័រប្រើប្រាស់ AI ក្នុងការអភិវឌ្ឍន៍សូហ្វវែរយ៉ាងដូចម្តេច?" },
+        { label: "💼 ការងារ & ជួល", q: "តើគាត់ទទួលការងារពេញម៉ោង ឬហ្វ្រីឡេនដែរឬទេ?" }
+      ],
       greeting: "ជម្រាបសួរ, ខ្ញុំបាទ",
       name: "ផុន លីហ័រ",
       phrases: [
         "អ្នកអភិវឌ្ឍន៍ Java & Spring Boot",
+        "ស្ថាបត្យករដំណោះស្រាយ AI & Web",
         "អ្នកអភិវឌ្ឍន៍វេបសាយ Full-Stack",
-        "អ្នកឯកទេសប្រព័ន្ធ POS",
-        "អ្នករចនា UI/UX"
+        "អ្នកឯកទេសប្រព័ន្ធ Enterprise POS",
+        "អ្នករចនា UI/UX អន្តរកម្ម"
       ],
       description: "អ្នកអភិវឌ្ឍន៍វេបសាយ និងវិស្វករច្នៃប្រឌិត ដែលបង្កើតដំណោះស្រាយឌីជីថលទំនើប ឆ្លើយតបលឿន និងមានប្រសិទ្ធភាព មកពីភ្នំពេញ កម្ពុជា។",
       exploreBtn: "មើលគម្រោង",
@@ -247,6 +286,21 @@ export const translations = {
       badge1Sub: "Java, Spring Boot & React",
       badge2Title: "10+ គម្រោង",
       badge2Sub: "បានបង្កើត & បញ្ចប់"
+    },
+    copilot: {
+      title: "Lyhor AI Copilot",
+      badge: "ជំនួយការ AI v4.5",
+      greeting: "✦ ជម្រាបសួរ! ខ្ញុំជាជំនួយការ AI របស់លីហ័រ។ សូមសួរខ្ញុំអំពីជំនាញកូដ ប្រព័ន្ធ POS គម្រោង ឬការងាររបស់គាត់។",
+      inputPlaceholder: "សួរអ្វីមួយអំពីជំនាញ POS ឬគម្រោងរបស់លីហ័រ...",
+      sendBtn: "ផ្ញើ",
+      thinking: "កំពុងដំណើរការចម្លើយ...",
+      close: "បិទ Copilot",
+      clear: "សម្អាតការសន្ទនា",
+      floatingBtn: "សួរ Lyhor AI",
+      quickPromptTitle: "សំណួរដែលបានណែនាំ",
+      actionProjects: "⚡ មើលគម្រោង",
+      actionContact: "💬 Telegram Chat",
+      actionCv: "📄 ទាញយក CV"
     },
     about: {
       tag: "អំពីខ្ញុំ",

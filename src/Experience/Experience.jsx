@@ -29,7 +29,9 @@ const Experience = () => {
   return (
     <section id="experience" className="experience-section">
       <div className="experience-header reveal">
-        <p className="sub-title">{t.experience.tag}</p>
+        <p className="sub-title">
+          <span className="section-tag-sparkle">✦</span> {t.experience.tag}
+        </p>
         <h2 className="title">
           {t.experience.titleStart} <span className="highlight">{t.experience.titleEnd}</span>
         </h2>
@@ -43,6 +45,11 @@ const Experience = () => {
             <div className="timeline-dot"></div>
 
             <div className="timeline-content">
+              <div className="card-hud-corner tl"></div>
+              <div className="card-hud-corner tr"></div>
+              <div className="card-hud-corner bl"></div>
+              <div className="card-hud-corner br"></div>
+
               <div className="timeline-meta">
                 <span className="date">{exp.date}</span>
                 <span className="company-badge">

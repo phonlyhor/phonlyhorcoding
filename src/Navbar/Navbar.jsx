@@ -40,7 +40,7 @@ const Navbar = () => {
   }, []);
 
   // =========================
-  // PARTICLE BACKGROUND
+  // NEURAL NETWORK CANVAS WITH MOUSE INTERACTION
   // =========================
   useEffect(() => {
     const canvas = document.getElementById("particleCanvas");
@@ -56,6 +56,20 @@ const Navbar = () => {
     resizeCanvas();
 
     let particles = [];
+    const mouse = { x: null, y: null, radius: 140 };
+
+    const handleMouseMove = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.x = null;
+      mouse.y = null;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseleave", handleMouseLeave);
 
     class Particle {
       constructor(x, y, dx, dy, size, color) {
@@ -65,6 +79,8 @@ const Navbar = () => {
         this.dy = dy;
         this.size = size;
         this.color = color;
+        this.baseX = x;
+        this.baseY = y;
       }
 
       draw() {
@@ -78,6 +94,18 @@ const Navbar = () => {
         if (this.x > canvas.width || this.x < 0) this.dx *= -1;
         if (this.y > canvas.height || this.y < 0) this.dy *= -1;
 
+        // Subtle mouse repulsion/reaction
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            const force = (mouse.radius - dist) / mouse.radius;
+            this.x -= (dx / dist) * force * 1.5;
+            this.y -= (dy / dist) * force * 1.5;
+          }
+        }
+
         this.x += this.dx;
         this.y += this.dy;
         this.draw();
@@ -86,27 +114,69 @@ const Navbar = () => {
 
     function init() {
       particles = [];
-      const darkColors = ["rgba(56,189,248,0.5)", "rgba(139,92,246,0.5)", "rgba(16,185,129,0.4)"];
-      const lightColors = ["rgba(2,132,199,0.4)", "rgba(124,58,237,0.4)", "rgba(5,150,105,0.4)"];
+      const darkColors = ["rgba(56,189,248,0.7)", "rgba(168,85,247,0.7)", "rgba(16,185,129,0.6)"];
+      const lightColors = ["rgba(2,132,199,0.6)", "rgba(124,58,237,0.6)", "rgba(5,150,105,0.6)"];
       const colors = theme === "light" ? lightColors : darkColors;
+      const count = window.innerWidth < 768 ? 35 : 65;
 
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < count; i++) {
         particles.push(
           new Particle(
             Math.random() * canvas.width,
             Math.random() * canvas.height,
-            (Math.random() - 0.5) * 0.6,
-            (Math.random() - 0.5) * 0.6,
-            Math.random() * 2.5 + 0.8,
+            (Math.random() - 0.5) * 0.7,
+            (Math.random() - 0.5) * 0.7,
+            Math.random() * 2.2 + 0.9,
             colors[Math.floor(Math.random() * colors.length)]
           )
         );
       }
     }
 
+    function connect() {
+      const maxDistance = 115;
+      const baseLineColor = theme === "light" ? "2, 132, 199" : "56, 189, 248";
+      const pLen = particles.length;
+
+      for (let a = 0; a < pLen; a++) {
+        for (let b = a + 1; b < pLen; b++) {
+          const dx = particles[a].x - particles[b].x;
+          const dy = particles[a].y - particles[b].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < maxDistance) {
+            const opacity = (1 - dist / maxDistance) * 0.28;
+            ctx.strokeStyle = `rgba(${baseLineColor}, ${opacity})`;
+            ctx.lineWidth = 0.8;
+            ctx.beginPath();
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(particles[b].x, particles[b].y);
+            ctx.stroke();
+          }
+        }
+
+        // Synaptic filament to mouse
+        if (mouse.x !== null && mouse.y !== null) {
+          const mdx = particles[a].x - mouse.x;
+          const mdy = particles[a].y - mouse.y;
+          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < mouse.radius) {
+            const mOpacity = (1 - mdist / mouse.radius) * 0.55;
+            ctx.strokeStyle = `rgba(168, 85, 247, ${mOpacity})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach((p) => p.update());
+      connect();
       animationId = requestAnimationFrame(animate);
     }
 
@@ -122,6 +192,8 @@ const Navbar = () => {
 
     return () => {
       window.removeEventListener("resize", resizeHandler);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationId);
     };
   }, [theme]);
@@ -193,8 +265,10 @@ const Navbar = () => {
 
   return (
     <>
+      <div className="cyber-grid-overlay"></div>
       <div className="ambient-light-1"></div>
       <div className="ambient-light-2"></div>
+      <div className="ambient-light-3"></div>
       <canvas id="particleCanvas"></canvas>
 
       {/* Backdrop for Mobile Drawer */}
@@ -210,6 +284,10 @@ const Navbar = () => {
           <div className="logo-badge">PL</div>
           <div className="logo-text">
             Phon <span>Lyhor</span>
+          </div>
+          <div className="nav-ai-status-pill">
+            <span className="nav-ai-dot"></span>
+            <span className="nav-ai-text">AI CORE</span>
           </div>
         </a>
 
@@ -316,9 +394,11 @@ const Navbar = () => {
       <div className="hero-wrapper" id="hero">
         <main className="hero">
           <div className="hero-content reveal-left">
-            <div className="status-badge">
+            <div className="status-badge ai-hud-badge">
               <span className="status-dot"></span>
-              {t.hero.status}
+              <span className="ai-hud-title">{t.hero.aiBadge || t.hero.status}</span>
+              <span className="ai-hud-sep">•</span>
+              <span className="ai-hud-sub">{t.hero.aiTelemetry}</span>
             </div>
 
             <h1 className="reveal">
@@ -341,20 +421,58 @@ const Navbar = () => {
               <a href="#contact" className="btn-secondary">
                 <i className="fa-regular fa-envelope"></i> {t.hero.contactBtn}
               </a>
+              <button
+                className="btn-ai-trigger"
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent("open-ai-copilot", { detail: { query: "" } }));
+                }}
+                title="Launch AI Copilot"
+              >
+                <span className="btn-ai-sparkle">✦</span>
+                <span>{t.copilot?.title || "Ask AI"}</span>
+              </button>
+            </div>
+
+            {/* Interactive AI Prompt Quick-Action Bar */}
+            <div className="hero-ai-prompt-bar reveal">
+              <div className="prompt-bar-header">
+                <span className="prompt-sparkle">✦</span>
+                <span className="prompt-title">{t.hero.aiPromptBarTitle || "Ask Lyhor AI Copilot:"}</span>
+              </div>
+              <div className="prompt-chips">
+                {t.hero.quickPrompts && t.hero.quickPrompts.map((p, idx) => (
+                  <button
+                    key={idx}
+                    className="prompt-chip"
+                    onClick={() => {
+                      window.dispatchEvent(new CustomEvent("open-ai-copilot", { detail: { query: p.q } }));
+                    }}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
           <div className="hero-image-wrapper reveal-right">
             <div className="glowing-frame">
+              <div className="hud-orbital-ring ring-1"></div>
+              <div className="hud-orbital-ring ring-2"></div>
+              <div className="hud-reticle top-left"></div>
+              <div className="hud-reticle top-right"></div>
+              <div className="hud-reticle bottom-left"></div>
+              <div className="hud-reticle bottom-right"></div>
+              <div className="cyber-scanline"></div>
               <div className="glowing-frame-inner">
                 <img src={pic} alt="Phon Lyhor Profile" />
               </div>
             </div>
 
             {/* Floating Info Badges */}
-            <div className="float-badge top-left">
+            <div className="float-badge top-left ai-glass-badge">
               <div className="badge-icon">
-                <i className="fa-solid fa-code"></i>
+                <i className="fa-solid fa-microchip"></i>
               </div>
               <div className="badge-text">
                 <strong>{t.hero.badge1Title}</strong>
@@ -362,9 +480,9 @@ const Navbar = () => {
               </div>
             </div>
 
-            <div className="float-badge bottom-right">
+            <div className="float-badge bottom-right ai-glass-badge">
               <div className="badge-icon">
-                <i className="fa-solid fa-rocket"></i>
+                <i className="fa-solid fa-bolt"></i>
               </div>
               <div className="badge-text">
                 <strong>{t.hero.badge2Title}</strong>

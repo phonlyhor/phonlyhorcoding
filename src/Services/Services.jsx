@@ -45,6 +45,12 @@ const Services = () => {
       <div className="services-grid">
         {t.services.items.map((service, index) => (
           <div key={index} className="service-card">
+            <div className="card-hud-corner tl"></div>
+            <div className="card-hud-corner tr"></div>
+            <div className="card-hud-corner bl"></div>
+            <div className="card-hud-corner br"></div>
+            <div className="service-beam-sweep"></div>
+
             <div className="icon-box">
               <i className={icons[index] || "fa-solid fa-cube"}></i>
             </div>

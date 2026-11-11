@@ -9,7 +9,9 @@ const About = () => {
     <section id="about" className="about">
       <div className="about-container">
         <div className="about-left reveal-left">
-          <span className="section-tag">{t.about.tag}</span>
+          <span className="section-tag">
+            <span className="section-tag-sparkle">✦</span> {t.about.tag}
+          </span>
 
           <h2>
             {t.about.titleStart}{" "}
@@ -47,6 +49,11 @@ const About = () => {
         </div>
 
         <div className="about-card reveal-right">
+          <div className="card-hud-corner tl"></div>
+          <div className="card-hud-corner tr"></div>
+          <div className="card-hud-corner bl"></div>
+          <div className="card-hud-corner br"></div>
+
           <h3>
             <i className="fa-solid fa-graduation-cap"></i> {t.about.eduTitle}
           </h3>
@@ -70,21 +77,33 @@ const About = () => {
 
       <div className="stats">
         <div className="stat reveal">
+          <div className="card-hud-corner tl"></div>
+          <div className="card-hud-corner tr"></div>
+          <div className="stat-glow-orb"></div>
           <h3>{t.about.stat1Val}</h3>
           <p>{t.about.stat1Lbl}</p>
         </div>
 
         <div className="stat reveal">
+          <div className="card-hud-corner tl"></div>
+          <div className="card-hud-corner tr"></div>
+          <div className="stat-glow-orb"></div>
           <h3>{t.about.stat2Val}</h3>
           <p>{t.about.stat2Lbl}</p>
         </div>
 
         <div className="stat reveal">
+          <div className="card-hud-corner tl"></div>
+          <div className="card-hud-corner tr"></div>
+          <div className="stat-glow-orb"></div>
           <h3>{t.about.stat3Val}</h3>
           <p>{t.about.stat3Lbl}</p>
         </div>
 
         <div className="stat reveal">
+          <div className="card-hud-corner tl"></div>
+          <div className="card-hud-corner tr"></div>
+          <div className="stat-glow-orb"></div>
           <h3>{t.about.stat4Val}</h3>
           <p>{t.about.stat4Lbl}</p>
         </div>

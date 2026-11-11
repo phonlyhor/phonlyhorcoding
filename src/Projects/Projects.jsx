@@ -205,7 +205,9 @@ const Projects = () => {
   return (
     <section id="projects" className="projects-section">
       <div className="projects-header reveal">
-        <p className="sub-title">{t.projects.tag}</p>
+        <p className="sub-title">
+          <span className="section-tag-sparkle">✦</span> {t.projects.tag}
+        </p>
         <h2 className="title">
           {t.projects.titleStart} <span className="highlight">{t.projects.titleEnd}</span>
         </h2>
@@ -232,6 +234,11 @@ const Projects = () => {
             className={`project-card ${project.isComingSoon ? "card-coming-soon" : ""}`}
             onClick={() => setSelectedProject(project)}
           >
+            <div className="card-hud-corner tl"></div>
+            <div className="card-hud-corner tr"></div>
+            <div className="card-hud-corner bl"></div>
+            <div className="card-hud-corner br"></div>
+
             <div className="card-image-wrap">
               {project.imgSrc ? (
                 <img

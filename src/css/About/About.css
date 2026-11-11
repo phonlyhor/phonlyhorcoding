@@ -16,18 +16,24 @@
 }
 
 .section-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--color-secondary);
   font-family: var(--font-mono);
-  font-size: 14px;
-  letter-spacing: 3px;
+  font-size: 13px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   font-weight: 700;
-  margin-bottom: 12px;
-  padding: 4px 12px;
+  margin-bottom: 14px;
+  padding: 4px 14px;
   background: rgba(139, 92, 246, 0.1);
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  border-radius: 6px;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 999px;
+}
+
+.section-tag-sparkle {
+  color: var(--color-primary);
 }
 
 .about-left h2 {
@@ -200,14 +206,34 @@
   border-radius: 20px;
   background: var(--bg-card);
   border: 1px solid var(--border-glass);
-  backdrop-filter: blur(12px);
-  transition: all 0.4s ease;
+  backdrop-filter: blur(16px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-glow-orb {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 6px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.6) 0%, transparent 70%);
+  filter: blur(6px);
+  opacity: 0.5;
+  transition: all 0.3s ease;
 }
 
 .stat:hover {
   transform: translateY(-8px);
-  border-color: var(--border-glass-bright);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.15);
+}
+
+.stat:hover .stat-glow-orb {
+  opacity: 1;
+  width: 120px;
 }
 
 .stat h3 {

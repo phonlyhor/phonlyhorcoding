@@ -65,7 +65,9 @@ const Contact = () => {
   return (
     <section id="contact" className="contact-section">
       <div className="contact-header reveal">
-        <p className="sub-title">{t.contact.tag}</p>
+        <p className="sub-title">
+          <span className="section-tag-sparkle">✦</span> {t.contact.tag}
+        </p>
         <h2 className="title">
           {t.contact.titleStart} <span className="highlight">{t.contact.titleEnd}</span>
         </h2>
@@ -74,6 +76,16 @@ const Contact = () => {
       <div className="contact-container">
         {/* Form */}
         <form className="contact-form reveal-left" onSubmit={handleSubmit}>
+          <div className="card-hud-corner tl"></div>
+          <div className="card-hud-corner tr"></div>
+          <div className="card-hud-corner bl"></div>
+          <div className="card-hud-corner br"></div>
+
+          <div className="terminal-status-bar">
+            <span className="terminal-dot"></span>
+            <span className="terminal-title">SYS://TRANSMISSION_TERMINAL • TLS 1.3</span>
+          </div>
+
           {isSubmitted && (
             <div className="form-success-banner">
               <i className="fa-solid fa-circle-check"></i> {t.contact.successMsg}
